@@ -1,0 +1,54 @@
+#!/bin/bash
+
+# this script takes as parameter $1 the name of a job definition file
+# the job definition files are in $INSTALL_PATH/config/jobs/
+
+# load app config file  from /etc/xrsync.conf
+source /etc/xrsync.conf
+
+# load functions
+source $XRSYNC_PATH/bin/functions.sh
+
+# declare commandline parameters as global variable
+export JOB_CONFIG_FILE=$1
+
+# check if commandline parameters are set
+if [ -z "$JOB_CONFIG_FILE" ]; then
+	echo "ERROR: No job config file defined, read the manual"
+	exit
+fi
+
+# check if the job definition file exists
+if [[ ! -e $INSTALL_PATH/config/jobs/$JOB_CONFIG_FILE ]]; then
+	echo "ERROR: The config file $1 does not exist!"
+	exit
+fi
+
+# TODO: check if all required parameters are set
+# check JOB_CONFIG_FILE Variables
+
+# check SOURCE_CONFIG_FILE Variables
+
+# check TARGET_CONFIG_FILE Variables
+
+# check Password file
+
+# check exclude file
+
+
+# include the job definition file
+source $XRSYNC_PATH/config/jobs/$JOB_CONFIG_FILE
+
+# load the source definition file
+
+# load the target defintion file
+
+echo $(date) Start $JOB_NAME
+# define the log File name
+LOG="$(date -I)-$1"
+
+(/$XRSYNC_PATH/bin/run.sh >> "/var/log/mirror-scripts/$LOG" )
+
+echo $(date) END $JOB_NAME
+
+
